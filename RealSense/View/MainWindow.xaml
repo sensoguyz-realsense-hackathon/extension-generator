@@ -6,23 +6,20 @@
         xmlns:local="clr-namespace:RealSense"
         xmlns:viewModels="clr-namespace:RealSense.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="220" Width="425"
+        MinWidth="425" MinHeight="200" MaxWidth="550" MaxHeight="240">
     <Window.Resources>
         <viewModels:MainWindowViewModel x:Key="viewModel"/>
         <Style x:Key="HeadStyle" TargetType="TextBlock" BasedOn="{StaticResource fontStyle}">
             <Setter Property="FontSize" Value="36"/>
         </Style>
-        <Style x:Key="SettingItemStyle" TargetType="TextBlock" BasedOn="{StaticResource fontStyle}">
+        <Style x:Key="InfoTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource fontStyle}">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="FontWeight" Value="Light"/>
             <Setter Property="Margin" Value="3,0"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
-        <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="5,0"/>
-        </Style>
-        <Style x:Key="SettingTextBoxBoxStyle" TargetType="TextBox">
+        <Style x:Key="InfoTextBoxBoxStyle" TargetType="TextBox">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="5,0"/>
@@ -35,38 +32,22 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="RealExtension Generator" Style="{StaticResource HeadStyle}"/>
         <Grid Grid.Row="1" Margin="20,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
             <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="6*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Extension Name" Margin="5" Style="{StaticResource SettingItemStyle}"/>
-                <TextBox Grid.Column="1" Margin="5"/>
+                <Button Grid.Row="0" Grid.Column="0" Command="{Binding ChooseConfigCommand}" Content="Choose config file" Margin="10,5" Padding="0,3"/>
+                <TextBlock Grid.Row="0" Style="{StaticResource InfoTextBlockStyle}" Grid.Column="1" Text="{Binding ConfigFilePath}"/>
+                <Button Grid.Row="1" Grid.Column="0" Command="{Binding ChooseDirectoryCommand}" Content="Choose out directory" Margin="10,5" Padding="0,3"/>
+                <TextBlock Grid.Row="1" Style="{StaticResource InfoTextBlockStyle}" Grid.Column="1" Text="{Binding DirectoryPath}"/>
+                <Button Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Command="{Binding ChooseDirectoryCommand}" Width="200" Content="Choose out directory" Margin="10,5" Padding="0,3"/>
             </Grid>
-            <StackPanel Grid.Row="1">
-                <StackPanel Orientation="Horizontal" Margin="0,3">
-                    <CheckBox IsChecked="{Binding ScrollEnabled}" Style="{StaticResource CheckBoxStyle}"/>
-                    <TextBlock Text="Scroll" Style="{StaticResource SettingItemStyle}"/>
-                    <TextBlock Visibility="{Binding ScrollEnabled, Converter={StaticResource EnabledToVisibilityConverter}}" Text="Target Class" Style="{StaticResource SettingItemStyle}"/>
-                    <TextBox Width="200" Visibility="{Binding ScrollEnabled,Converter={StaticResource EnabledToVisibilityConverter}}" Style="{StaticResource SettingTextBoxBoxStyle}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,3">
-                    <CheckBox IsChecked="{Binding SwipeEnabled}" Style="{StaticResource CheckBoxStyle}"/>
-                    <TextBlock Text="Swipe" Style="{StaticResource SettingItemStyle}"/>
-                    <TextBlock Visibility="{Binding SwipeEnabled, Converter={StaticResource EnabledToVisibilityConverter}}" Text="Target Class" Style="{StaticResource SettingItemStyle}"/>
-                    <TextBox Width="200" Visibility="{Binding SwipeEnabled,Converter={StaticResource EnabledToVisibilityConverter}}" Style="{StaticResource SettingTextBoxBoxStyle}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,3">
-                    <CheckBox IsChecked="{Binding LikeEnabled}" Style="{StaticResource CheckBoxStyle}"/>
-                    <TextBlock Text="Like" Style="{StaticResource SettingItemStyle}"/>
-                    <TextBlock Visibility="{Binding LikeEnabled, Converter={StaticResource EnabledToVisibilityConverter}}" Text="Target Class" Style="{StaticResource SettingItemStyle}"/>
-                    <TextBox Width="200" Visibility="{Binding LikeEnabled,Converter={StaticResource EnabledToVisibilityConverter}}" Style="{StaticResource SettingTextBoxBoxStyle}"/>
-                </StackPanel>
-            </StackPanel>
         </Grid>
     </Grid>
 </Window>

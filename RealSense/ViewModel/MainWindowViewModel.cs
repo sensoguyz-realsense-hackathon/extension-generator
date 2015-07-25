@@ -1,55 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Xml.Serialization;
 using RealSense.Commands;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace RealSense.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        public const string PathToProject = "asd";
+
         #region Private Fields
 
-        private bool _scrollEnabled;
-        private bool _swipeEnabled;
-        private bool _likeEnabled;
+        private string _configFilePath;
+        private string _directoryPath;
+        
 
         #endregion
 
         #region Public Fields
 
-        public bool ScrollEnabled
+        public string ConfigFilePath
         {
-            get { return _scrollEnabled; }
+            get { return _configFilePath; }
             set
             {
-                _scrollEnabled = value;
-                OnProprtyChanged("ScrollEnabled");
-            }
-        }
-        public bool SwipeEnabled
-        {
-            get { return _swipeEnabled; }
-            set
-            {
-                _swipeEnabled = value;
-                OnProprtyChanged("SwipeEnabled");
-            }
-        }
-        public bool LikeEnabled
-        {
-            get { return _likeEnabled; }
-            set
-            {
-                _likeEnabled = value;
-                OnProprtyChanged("LikeEnabled");
+                _configFilePath = value;
+                OnProprtyChanged("ConfigFilePath");
             }
         }
 
-        public ICommand GenerateCommand;
+        public string DirectoryPath
+        {
+            get { return _directoryPath; }
+            set
+            {
+                _directoryPath = value;
+                OnProprtyChanged("DirectoryPath");
+            }
+        }
+
+        public ICommand ChooseConfigCommand { get; set; }
+        public ICommand ChooseDirectoryCommand { get; set; }
 
         #endregion
 
@@ -57,21 +55,29 @@ namespace RealSense.ViewModel
 
         public MainWindowViewModel()
         {
-            GenerateCommand = new RelayCommand(GenerateCommandExecute, GenerateCommandCanExecute);
+            ChooseConfigCommand = new RelayCommand(ChooseConfigExecute);
+            ChooseDirectoryCommand = new RelayCommand(ChooseDirectoryExecute);
         }
-
         #endregion
 
         #region Private Methods
 
-        bool GenerateCommandCanExecute()
+        void ChooseConfigExecute()
         {
-            return true;
+            var dialog = new OpenFileDialog();
+            dialog.Filter = "Json file | *.json";
+            if (dialog.ShowDialog() ?? false)
+            {
+                ConfigFilePath = Path.GetFileName(dialog.FileName);
+            }
         }
-
-        void GenerateCommandExecute()
+        void ChooseDirectoryExecute()
         {
-            
+            var dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog()==DialogResult.OK)
+            {
+                DirectoryPath = Path.GetFileName(dialog.SelectedPath);
+            }
         }
 
 
