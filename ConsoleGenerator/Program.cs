@@ -6,6 +6,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using GeneratorLibrary;
 
 namespace ConsoleGenerator
 {
@@ -40,27 +41,8 @@ namespace ConsoleGenerator
             }
             var json = File.ReadAllText(args[0]);
             dynamic config = JsonConvert.DeserializeObject(json);
-//            Console.WriteLine(config.ToString());
-            CopyDir(new DirectoryInfo(Environment.CurrentDirectory + "/" + SourceProjectDirName),
+            FolderManager.CopyDir(new DirectoryInfo(Environment.CurrentDirectory + "/" + SourceProjectDirName),
                 args[1] + "/" + config.name + " " + RealSenseExtensionString);
-        }
-
-        static void CopyDir(DirectoryInfo dir,string destinationPath)
-        {
-            var files = dir.GetFiles();
-            Directory.CreateDirectory(destinationPath);
-            foreach (var file in files)
-                File.Copy(file.FullName, string.Concat(destinationPath, "/", file.Name));
-            var dirs = dir.GetDirectories();
-            if (dirs.Length == 0) return;
-            foreach (var directory in dirs)
-                CopyDir(directory, destinationPath + "/" + directory.Name);
-
-        }
-
-        void ParseLink(object json)
-        {
-            
         }
     }
 }
