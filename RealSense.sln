@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealSense", "RealSense\RealSense.csproj", "{5477E02B-A4AF-4F54-93FF-175D2F0C3BD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneratorLibrary", "GeneratorLibrary\GeneratorLibrary.csproj", "{8C693C4B-BB16-43ED-8CB7-A1EC432597BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleGenerator", "ConsoleGenerator\ConsoleGenerator.csproj", "{581C6426-4C07-4CB8-9C6E-3A6A32A07927}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5477E02B-A4AF-4F54-93FF-175D2F0C3BD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5477E02B-A4AF-4F54-93FF-175D2F0C3BD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5477E02B-A4AF-4F54-93FF-175D2F0C3BD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5477E02B-A4AF-4F54-93FF-175D2F0C3BD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C693C4B-BB16-43ED-8CB7-A1EC432597BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C693C4B-BB16-43ED-8CB7-A1EC432597BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C693C4B-BB16-43ED-8CB7-A1EC432597BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C693C4B-BB16-43ED-8CB7-A1EC432597BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{581C6426-4C07-4CB8-9C6E-3A6A32A07927}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{581C6426-4C07-4CB8-9C6E-3A6A32A07927}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{581C6426-4C07-4CB8-9C6E-3A6A32A07927}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{581C6426-4C07-4CB8-9C6E-3A6A32A07927}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
