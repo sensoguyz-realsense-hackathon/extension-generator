@@ -12,6 +12,7 @@ namespace ConsoleGenerator
     class Program
     {
         private const string RealSenseExtensionString = "RealSense Extension";
+        public const string SourceProjectDirName = "instahandless";
         static void Main(string[] args)
         {
             if (args.Length == 0)
@@ -40,7 +41,7 @@ namespace ConsoleGenerator
             var json = File.ReadAllText(args[0]);
             dynamic config = JsonConvert.DeserializeObject(json);
 //            Console.WriteLine(config.ToString());
-            CopyDir(new DirectoryInfo(Environment.CurrentDirectory + "/project"),
+            CopyDir(new DirectoryInfo(Environment.CurrentDirectory + "/" + SourceProjectDirName),
                 args[1] + "/" + config.name + " " + RealSenseExtensionString);
         }
 
