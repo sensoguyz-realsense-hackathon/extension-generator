@@ -1,0 +1,36 @@
+{
+	"name" : "Habrahabr",
+	"description" : "asdas",
+	"matchers" :
+	[
+		{
+			"url" : "http://habrahabr.ru/",
+			"config" : {
+				"post_selector" : ".post",
+				"swipe_up" : {
+					"scroll" : "next_post",
+				},
+				"swipe_down" : {
+					"scroll" : "prev_post",
+				},
+				"tap" : {
+					"href" : {
+						"selector" : "current_post.a"
+					}
+				}
+			}
+		},
+		{
+			"url" : "http://habrahabr.ru/post/*",
+			"config" : {
+				"post_selector" : ".post",
+				"thumb_up" : {
+					"scroll" : -500,
+				},
+				"thumb_down" : {
+					"scroll" : 500,
+				}
+			}
+		},
+	]
+}
