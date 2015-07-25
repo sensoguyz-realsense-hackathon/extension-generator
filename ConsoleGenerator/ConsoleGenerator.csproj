@@ -54,6 +54,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GeneratorLibrary\GeneratorLibrary.csproj">
+      <Project>{8c693c4b-bb16-43ed-8cb7-a1ec432597bb}</Project>
+      <Name>GeneratorLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Xml.Serialization;
+using GeneratorLibrary;
+using Newtonsoft.Json;
 using RealSense.Commands;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
@@ -14,40 +16,44 @@ namespace RealSense.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public const string PathToProject = "asd";
+        public const string PathToProject = "instahandless";
+        public const string RealSenseExtensionString = "RealSense Extension"; 
 
         #region Private Fields
 
         private string _configFilePath;
         private string _directoryPath;
+        private string _fileName;
+        private string _directoryName;
         
 
         #endregion
 
         #region Public Fields
 
-        public string ConfigFilePath
+        public string FileName
         {
-            get { return _configFilePath; }
+            get { return _fileName; }
             set
             {
-                _configFilePath = value;
-                OnProprtyChanged("ConfigFilePath");
+                _fileName = value;
+                OnProprtyChanged("FileName");
             }
         }
 
-        public string DirectoryPath
+        public string DirectoryName
         {
-            get { return _directoryPath; }
+            get { return _directoryName; }
             set
             {
-                _directoryPath = value;
-                OnProprtyChanged("DirectoryPath");
+                _directoryName = value;
+                OnProprtyChanged("DirectoryName");
             }
         }
 
         public ICommand ChooseConfigCommand { get; set; }
         public ICommand ChooseDirectoryCommand { get; set; }
+        public ICommand CompileCommand { get; set; }
 
         #endregion
 
@@ -57,7 +63,9 @@ namespace RealSense.ViewModel
         {
             ChooseConfigCommand = new RelayCommand(ChooseConfigExecute);
             ChooseDirectoryCommand = new RelayCommand(ChooseDirectoryExecute);
+            CompileCommand = new RelayCommand(CompileExecute, CompileCanExecute);
         }
+
         #endregion
 
         #region Private Methods
@@ -68,7 +76,8 @@ namespace RealSense.ViewModel
             dialog.Filter = "Json file | *.json";
             if (dialog.ShowDialog() ?? false)
             {
-                ConfigFilePath = Path.GetFileName(dialog.FileName);
+                _configFilePath = dialog.FileName;
+                FileName = dialog.SafeFileName;
             }
         }
         void ChooseDirectoryExecute()
@@ -76,8 +85,37 @@ namespace RealSense.ViewModel
             var dialog = new FolderBrowserDialog();
             if (dialog.ShowDialog()==DialogResult.OK)
             {
-                DirectoryPath = Path.GetFileName(dialog.SelectedPath);
+                _directoryPath = dialog.SelectedPath;
+                DirectoryName = Path.GetFileName(dialog.SelectedPath);
             }
+        }
+        bool CompileCanExecute()
+        {
+            return !string.IsNullOrEmpty(FileName) &&
+                   !string.IsNullOrEmpty(DirectoryName);
+        }
+        void CompileExecute()
+        {
+            try
+            {
+                var json = File.ReadAllText(_configFilePath);
+                dynamic config = JsonConvert.DeserializeObject(json);
+                var path = _directoryPath + "/" + config.name + " " + RealSenseExtensionString;
+                if (Directory.Exists(path))
+                    if (
+                        MessageBox.Show("Current extension already generated.\n\nDo you want replace this extension?",
+                            "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                        Directory.Delete(path, true);
+                    else return;
+                    FolderManager.CopyDir(new DirectoryInfo(PathToProject),
+                    _directoryPath + "/" + config.name + " " + RealSenseExtensionString);
+            }
+            catch (Exception ex)
+            {
+//                MessageBox.Show("Something goes wrong");
+                MessageBox.Show(ex.Message);
+            }
+            MessageBox.Show("Extension generate sucessfully", "Generate complete", MessageBoxButtons.OK);
         }
 
 
